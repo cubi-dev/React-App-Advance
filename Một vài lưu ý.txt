@@ -28,3 +28,4 @@ src/index.js: import 'bootstrap/dist/css/bootstrap.min.css';
 Đổi file "App.css" thành "App.scss" 
 cut code từ "index.css" bỏ vào "App.scss" rồi xóa file "index.css"
 Xóa file "App.test.js" 
+______________________________CẢM ƠN______________________________________
