@@ -1,0 +1,30 @@
+Điều đầu tiên cần làm là phải check version của nodeJS
+	- Go to cmd: 
+		+	node -v 
+- Để chuyển đổi nodeJS version ta sẽ dùng nvm (Node Version Manager)
+		+ B1: Uninstall node.js (phải xóa node JS để cài nvm quản lý bởi vì nếu để lại thì sẽ không có tác dụng nvm) 
+			Lưu ý version nodeJS đang sử dụng : v18.12.1
+		+ B2: Install nvm : cài từ github về: https://github.com/coreybutler/nvm-windows/releases
+			Lưu ý: ở đây sử dụng ver 1.1.7
+			Tải nvm-setup.zip và cài đặt 
+		+ B3: Tải các version của nodeJS cần cài đặt 
+			https://nodejs.org/download/release/v18.12.1/ vào tải lại node js version 
+			cmd:  nvm install 18.12.1
+			      nvm install 14.17.0
+		+ B4: Để sử dụng các version dùng cmd: nvm use full_version_number. ex: nvm use 18.12.1
+- Lợi ích: Chuyển đổi các ver của nodejs trước khi npm install để tải các package k bị lỗi 
+
+________________HẠ VERSION REACT___________________________________
+-	Vào package.json đổi 
+	"react": "^17.0.2",
+    "react-dom": "^17.0.2",
+Đổi sao cho bằng với ver tương thích 
+-	Vào index.js đổi 
+- 	Sau khi đổi xong thì mở terminal: npm i
+________________________SETUP_____________________________________________
+npm install --save-exact react-bootstrap@2.2.2 bootstrap@5.1.3 sass@1.49.10 axios@0.26.1
+
+src/index.js: import 'bootstrap/dist/css/bootstrap.min.css';
+Đổi file "App.css" thành "App.scss" 
+cut code từ "index.css" bỏ vào "App.scss" rồi xóa file "index.css"
+Xóa file "App.test.js" 

@@ -1,0 +1,193 @@
+___________________________EXAM________________________________
+- Sử dụng API từ trang web https://regres.in/ để tạo website 
+- Sử dụng framework ReactJS để tạo một màn hình website cơ bản gồm các chức năng 
+1.   Đăng nhập 
+2.   Thêm User 
+3.   Sửa User
+4.   Xóa User 
+5.   Hiển thị tất cả các User 
+6.   Tìm kiếm User theo id 
+7.   Sắp xếp theo FirstName 
+8.   Import User từ file .csv 
+9.   Export User ra file .csv 
+- Tự do tùy chỉnh html, css để có một website nhẹ nhàng, khoa học và đẹp 
+- Commit và đẩy source code lên github public 
+- Triển khai website lên Heroku để demo 
+____________________________LEVEL__________________________________
+BASIC: 
+     0. Create git repos, setup git local 
+     1. Login, Axios, Store to local storeage 
+     2. Private routes. Check token
+     3. CRUD users: 
+          -    List users 
+          -    Create a user 
+          -    Edit a user 
+          -    Delete a user 
+     4. Customize list users 
+          -    Paginate list user 
+          -    Filter by id 
+          -    Sort by first name 
+     5. Working with excel 
+          -    Import excel (read file excel)
+          -    Export excel
+
+ADVANCE: USING REDUX 
+Lưu ý: Nên làm phần 3 trước
+     CMD: npm install --save-exact react-bootstrap@2.2.2 bootstrap@5.1.3 sass@1.49.10 axios@0.26.1
+UI:  -    Sử dụng react-bootstrap 
+     -    Sử dụng scss
+
+
+___________________________USING____________________________________________
+npx create-react-app 
+npm i 
+-    Tạo repo 
+-    git init
+-    git add . 
+-    git commit -m "message" 
+-    git push 
+-    git remote rm origin: để fix lỗi remote already exist 
+-    git remote add origin .....
+-    git push origin master 
+
+npm install --save-exact react-bootstrap@2.2.2 bootstrap@5.1.3 sass@1.49.10 axios@0.26.1
+
+src/index.js: import 'bootstrap/dist/css/bootstrap.min.css';
+Đổi file "App.css" thành "App.scss" 
+cut code từ "index.css" bỏ vào "App.scss" rồi xóa file "index.css"
+Xóa file "App.test.js" 
+_______________________________Phân quyền________________________________________-
+Sẽ sử dụng phân quyền dựa vào token 
+Tạo folder "services" bên trong đó có 2 folder "axios.js" và "UserService.js"
+________API______________________
+Instance: Tức là tự định nghĩa sẽ gọi API trong một khoảng thời gian bao lâu thì timeOut 
+Interceptors: Trước khi gửi request lên server | Sau khi nhận đc response từ server => thì làm cgi (VD: đính kèm token) 
+=> Giúp data trả về đúng như hình thù mong muốn 
+_____________Pagination(Phân trang)_____________________________
+Tham số: 
+	"page" : 2, 	 => Tức là tham số trả về đang ở trang thứ 2 (kết quả tại trang thứ 2) 
+	"per_page": 6,	 => Tổng số phần tử đang hiện trên màn hình là 6 item 
+	"total": 12,	 => Tổng số item ở trong database 
+	"total_pages": 2,  => Có thể chia được bao nhiêu trang 
+
+Package sử dụng: react-paginate  
+	npm install --save-exact react-paginate@8.1.2 
+Do: 
+-	Để có thể sử dụng phân trang cta sẽ phải lưu giá trị trang trên API vào state ("total_pages")
+-	B1: Tạo state: const [totalUsers, setTotalUsers] = useState(0); (để lấy tổng số phần tử của 1 trang) 
+			   const [totalPages, setTotalPages] = useState(0); (để lấy tổng số trang) 
+-	B2: Sau khi lấy đc response của API thì sẽ setState: setTotalUsers(res.total) => Lấy được tổng số lượng phần tử (trong 1 trang) 
+									     setTotalPages(res.total_pages); => Lấy được tổng số trang  
+-	B3: Sau
+______________ADD NEW USER__________________________________________
+#08: tạo modal thêm người dùng 
+-	Tạo mới component "ModalAddNew.js"
+{
+    "name": "morpheus",
+    "job": "leader"
+}
+-	Ở đây khi mà muốn tạo mới user thì phải dùng method POST và truyền "name" , "job" 
+#09: Tích hợp API create user 
+-	Đầu tiên là cta sẽ phải tạo ra hàm gọi API ở "userServices.js" 
+-	Cài đặt react-toastify: npm install --save-exact react-toastify@8.2.0
+-	Các cách để có thể add User:
+	+	C1: đẩy listUser vào trong cha của nó là tk addNewUser 
+	+	C2: Redux 
+	+	C3: chuyển ModalAddNew vào trong TableUser và thao tác trong đó  
+	+	C4: REF (Reference)  
+=> Ở đây cta sẽ dùng C3 (basic) cho dễ thực hành  
+Lưu ý: trong ModalAddNew 
+	      handleUpdateTable({first_name: name, id: res.id}) 
+Ở đây cta phải chế biến lại cái user bởi vì api chỉ cho phép 2 field là name và job 
+#10: Design Modal Edit/Delete Users 
+#11: API Edit User
+-	Tích hợp API edit user 
+-	Flow : 
+		+	Thêm phương thức và hàm trong UserService.js
+		+	Thêm phương thức và hàm trong TableUser.js
+		+	Thêm phương thức và hàm trong ModalEditUser.js
+-	Tải Lodash: npm install--save-exact lodash@4.17.21
+		+ 	Điểm đặc trưng của lodash là "_" (dấu gạch dưới) 
+#12: Modal Confirm delete 
+#13: Delete User 
+#14: Design Sort Header
+-	Use: 
+		+	package react-table (optional) 
+		+	Font awesome 6: npm install --save-exact @fortawesome/fontawesome-free@6.1.1
+		+	Tích hợp font awesome 6 
+		+	Css header 
+		+	Onclick, base state react 
+
+-	Flow: 
+		+	Tạo component TableUser.scss
+		+	Khai báo state trong tableUser.js 
+		+	Tạo hàm handle các state đó và truyền vào giao diện cần xử lý 
+#15: Filter Users 
+-	Flow: 
+		+	Khai báo state trong tableUser.js 
+		+ 	Bỏ setState vào trong ô input 
+
+		
+#16: Tích hợp thư viện cho Excel:
+-	Use: 
+		+	Import User từ file .csv 
+		+	Export User ra file .csv  
+		+	Package: react-csv , papaparse 
+		+	npm install --save-exact react-csv@2.2.2 papaparse@5.3.2
+#17: Import/Export với CSV: 
+#18: Export Data 
+5:13
+-	Flow: 
+		+ 	asyncOnClick={true} báo cho thư viện biết rằng get data 
+		+	Hàm ở trên sẽ k chạy ngay vì nó cần p chạy hàm onClick trước nên sẽ vào hàm getUserExport  
+		+	Ở trong hàm đó khi ta gọi hàm done(); thì asyncOnClick={true} mới thực hiện 
+#19: Import Data 
+19:42
+#20: Design App layout 
+	+ 	Không nên đặt thẻ <img> để lấy ra 1 cái ảnh , thay vào đó chúng ta nên import để giảm thiểu render của webpack 
+	+	npm install --save -exact react-router-dom@6.3.0
+	+	Sẽ nhận thấy khi chuyển trang sẽ bị reload lại đó là bởi vì 
+		 	SPA : Single Page Application
+#21: Design Login Page 
+#22: API Login
+	+	Vào services/UserService tạo Api 
+	+	Vào component/Login.js xử lý 
+#23: Hoàn thiện chức năng login 
+	+ 	Sử dụng useContext  
+#24: UseContext Hook: 
+	+	Bản chất của useContext() là lưu trữ 1 cái biến global trong react-app của chúng ta 
+	+	Step: 
+			. Khởi tạo createContext(); 
+			. Provide Context 
+			. Implement Context in app (Bọc <UserProvider> cho App)
+			. Update Context 
+			. Vào index.js: import { UserProvider } from './context/UserContext';
+#25: Private Route
+#26: Fix lỗi hard reloading 
+	+ 	Bản chất: 
+			. Là do create-react-app sử dụng package "react-scripts" để dịch code thay vì webpack  
+	+	Fix: 
+			. npm install --save-exact react-error-overlay@6.0.9
+#27: Fix giao diện 
+	+	Router not found 
+	+	Trim email, enter login 
+	+	Responsive Mobile 
+#29: Tích hợp Redux 
+	+ 	git checkout -b redux: Đổi nhánh qua "Redux" để làm k ảnh hưởng code cũ  
+	+ 	Các bước set-up: React - Redux :
+			.	Install redux and react-redux, redux-thunk:
+					.	npm install --save-exact redux@4.2.0 react-redux@8.0.1
+					.	npm install --save-exact redux-thunk@2.4.1
+					.	npm install --save-exact redux-devtools-extension@2.13.9
+
+			.	Setup Redux Store in your index.js
+					.	create a file named store.js inside the ./src/redux directory
+					.	create a file named rootReducer inside the same directory as the store
+					.	create a file named userReducer inside the same directory as the store
+					.	Cài đặt redux-thunk để xử lý bất đồng bộ 
+					.	
+
+			.	Setup counter reducer/actions/types
+#30: Remove useContext()
+	+	Khi có sự thay đổi của biến user thì phải useEffect 
+#31: Tối ưu hóa app
